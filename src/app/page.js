@@ -145,6 +145,50 @@ export default function Home() {
           </form>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-[#023373] text-white py-10 px-4">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Fintract Global</h4>
+            <p>
+              Redefining digital banking experiences with innovation, trust,
+              and security.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Company</h4>
+            <ul className="space-y-2">
+              <li><a href="/about" className="hover:underline">About Us</a></li>
+              <li><a href="/services" className="hover:underline">Services</a></li>
+              <li><a href="/blog" className="hover:underline">Blog</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Support</h4>
+            <ul className="space-y-2">
+              <li><a href="/contact" className="hover:underline">Contact</a></li>
+              <li><a href="#" className="hover:underline">FAQs</a></li>
+              <li><a href="#" className="hover:underline">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="hover:underline">LinkedIn</a></li>
+              <li><a href="#" className="hover:underline">Twitter</a></li>
+              <li><a href="#" className="hover:underline">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="text-center text-xs mt-10 text-gray-300">
+          &copy; {new Date().getFullYear()} Fintract Global. All rights reserved.
+        </div>
+      </footer>
     </main>
   );
 }
