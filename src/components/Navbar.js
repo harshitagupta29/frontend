@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <nav className="bg-blue-900 text-white px-8 py-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">YourLogo</div>
+      <div className="text-2xl font-bold">Fintract Global</div>
 
       <ul className="flex gap-6 text-sm font-medium">
         <li><Link href="/">Home</Link></li>

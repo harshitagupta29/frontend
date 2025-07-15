@@ -10,7 +10,7 @@ export default function Home() {
       <section className="bg-gray-100 py-20 px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl font-bold text-blue-900 mb-6">
-            Bank Smarter, Live Better
+              Welcome to Fintract Global
           </h1>
           <p className="text-lg text-gray-700 mb-8">
             Discover key features and financial tools to power your future.
@@ -150,7 +150,7 @@ export default function Home() {
   <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-left">
     {/* Branding */}
     <div>
-      <h3 className="text-xl font-bold mb-2">FinBank</h3>
+      <h3 className="text-xl font-bold mb-2">FintractGlobal</h3>
       <p className="text-sm text-gray-300">
         Secure. Smart. Simplified banking.
       </p>
@@ -170,7 +170,7 @@ export default function Home() {
     {/* Copyright */}
     <div className="md:text-right">
       <p className="text-sm text-gray-300">
-        &copy; {new Date().getFullYear()} FinBank. All rights reserved.
+        &copy; {new Date().getFullYear()} FintractGlobal. All rights reserved.
       </p>
     </div>
   </div>
