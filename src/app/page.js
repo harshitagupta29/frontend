@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
       <section className="bg-gray-100 py-20 px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl font-bold text-blue-900 mb-6">
-              Welcome to Fintract Global
+            Bank Smarter, Live Better
           </h1>
           <p className="text-lg text-gray-700 mb-8">
             Discover key features and financial tools to power your future.
@@ -145,37 +146,9 @@ export default function Home() {
           </form>
         </div>
       </section>
-      {/* Footer Section */}
-<footer className="bg-blue-900 text-white py-8 px-6">
-  <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-left">
-    {/* Branding */}
-    <div>
-      <h3 className="text-xl font-bold mb-2">FintractGlobal</h3>
-      <p className="text-sm text-gray-300">
-        Secure. Smart. Simplified banking.
-      </p>
-    </div>
 
-    {/* Navigation */}
-    <div>
-      <h4 className="font-semibold mb-2">Quick Links</h4>
-      <ul className="space-y-1 text-sm text-gray-300">
-        <li><a href="/" className="hover:underline">Home</a></li>
-        <li><a href="/about" className="hover:underline">About</a></li>
-        <li><a href="/services" className="hover:underline">Services</a></li>
-        <li><a href="/contact" className="hover:underline">Contact</a></li>
-      </ul>
-    </div>
-
-    {/* Copyright */}
-    <div className="md:text-right">
-      <p className="text-sm text-gray-300">
-        &copy; {new Date().getFullYear()} FintractGlobal. All rights reserved.
-      </p>
-    </div>
-  </div>
-</footer>
-
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }
