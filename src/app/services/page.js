@@ -1,29 +1,60 @@
+'use client';
+import { useState } from 'react';
+
 export default function ServicesPage() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const services = [
+    {
+      title: "Personal & Business Banking",
+      description: "24/7 banking solutions tailored to individuals and enterprises alike.",
+    },
+    {
+      title: "Loans",
+      description: "Personal, home, and business loans with competitive interest rates.",
+    },
+    {
+      title: "Investment Services",
+      description: "Grow your wealth through a variety of safe investment options.",
+    },
+    {
+      title: "Insurance",
+      description: "Comprehensive insurance services for your life, health, and property.",
+    },
+    {
+      title: "Forex & International Banking",
+      description: "Seamless international banking, remittance and forex exchange.",
+    },
+  ];
+
+  const toggleAccordion = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <main className="bg-gray-50 min-h-screen py-16 px-6">
-      <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-[#023373] mb-6">Our Services</h1>
-        <p className="text-lg text-gray-700 mb-10">
-          Fintract Global offers a wide range of financial services tailored for modern banking needs.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold text-[#023373] mb-2">Digital Banking</h3>
-            <p className="text-gray-600">24/7 access to your account, smart transfers, and bill payments.</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold text-[#023373] mb-2">Investment Insights</h3>
-            <p className="text-gray-600">Personalized advice and real-time tracking for your financial goals.</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold text-[#023373] mb-2">Expense Monitoring</h3>
-            <p className="text-gray-600">Visualize your spending and optimize your budgeting strategy.</p>
-          </div>
-        </div>
+    <div className="bg-gray-50 min-h-screen py-12 px-4">
+      <div className="max-w-4xl mx-auto text-center mb-10">
+        <h1 className="text-4xl font-bold text-gray-800">Our Services</h1>
+        <p className="text-gray-600 mt-4">Fintract Global offers a wide range of services to meet your financial needs.</p>
       </div>
-    </main>
+
+      <div className="max-w-3xl mx-auto space-y-4">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="bg-white p-4 rounded-lg shadow cursor-pointer"
+            onClick={() => toggleAccordion(index)}
+          >
+            <div className="flex justify-between items-center">
+              <h3 className="text-xl font-semibold text-gray-800">{service.title}</h3>
+              <span>{openIndex === index ? '-' : '+'}</span>
+            </div>
+            {openIndex === index && (
+              <p className="mt-2 text-gray-600">{service.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
