@@ -6,7 +6,7 @@ export default function Home() {
       {/* Navbar */}
       <Navbar />
 
-      {/* Hero Section */}
+      
       <section className="py-24 px-6 md:px-32 bg-white text-left border-b">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-7xl md:text-8xl font-extrabold text-green-1000 leading-tight mb-6">
@@ -32,8 +32,55 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="bg-green-900 text-white py-10 px-6 md:px-20 relative z-10">
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+    
+    <div>
+      <p className="text-2xl font-bold">300%</p>
+      <p className="text-sm mt-1">Fast Processing Cycle</p>
+    </div>
+
+    <div>
+      <p className="text-2xl font-bold">80+</p>
+      <p className="text-sm mt-1">
+        points up in the NPS–<br />Net Promoter Score
+      </p>
+    </div>
+
+    <div>
+      <p className="text-2xl font-bold">5%</p>
+      <p className="text-sm mt-1">
+        CAPEX – Capital investment,<br />
+        no upfront fees or hidden charges.
+      </p>
+    </div>
+
+    <div>
+      <p className="text-2xl font-bold">90%</p>
+      <p className="text-sm mt-1">cheaper payment<br />fees and transaction cost</p>
+    </div>
+
+    <div>
+      <p className="text-2xl font-bold">80+</p>
+      <p className="text-sm mt-1">
+        points up in the NPS–<br />Net Promoter Score
+      </p>
+    </div>
+
+    <div>
+      <p className="text-2xl font-bold">70%</p>
+      <p className="text-sm mt-1">less expensive<br />of FX fees</p>
+    </div>
+
+  </div>
+</section>
+
+         
+
 
       {/* Feature Cards Section */}
+      {/* Services Section (Accordion) */}
+
       <section className="py-20 bg-gray-50 px-6 md:px-20 text-center">
         <h2 className="text-4xl font-bold text-green-900 mb-12">
           Discover Our Key Features
@@ -141,39 +188,78 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-green-900 text-white py-12 px-6 md:px-20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Fintract Global</h4>
-            <p>
-              Redefining digital banking experiences with innovation, trust,
-              and security.
-            </p>
-          </div>
+      
+      <footer className="bg-green-900 text-white px-6 md:px-20 py-12">
+  <div className="grid grid-cols-1 md:grid-cols-5 gap-10 text-center md:text-left">
 
-          {[
-            ["Company", ["About Us", "Services", "Blog"]],
-            ["Support", ["Contact", "FAQs", "Privacy Policy"]],
-            ["Follow Us", ["LinkedIn", "Twitter", "Instagram"]],
-          ].map(([title, links], i) => (
-            <div key={i}>
-              <h4 className="font-semibold text-lg mb-4">{title}</h4>
-              <ul className="space-y-2">
-                {links.map((text, j) => (
-                  <li key={j}>
-                    <a href="#" className="hover:underline">{text}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+    {/* Logo + Description */}
+    <div className="md:col-span-1 flex flex-col items-center md:items-start">
+      <img src="/logo.png" alt="Logo" className="h-12 mb-4" /> {/* Replace with actual logo path */}
+      <h3 className="text-xl font-bold mb-2">Fintract Global</h3>
+      <p className="text-sm">
+        We want to accelerate client growth, enhance their customer base, and
+        boost revenue through the use of our quality-focused products.
+      </p>
 
-        <div className="text-center text-xs mt-10 text-gray-300">
-          &copy; {new Date().getFullYear()} Fintract Global. All rights reserved.
-        </div>
-      </footer>
+      {/* Social Icons */}
+      <div className="flex gap-4 mt-4 text-white text-lg">
+        <a href="#"><i className="fab fa-facebook-square"></i></a>
+        <a href="#"><i className="fab fa-youtube"></i></a>
+        <a href="#"><i className="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+
+    {/* About Us */}
+    <div>
+      <h4 className="font-bold mb-3">About us</h4>
+      <ul className="space-y-2 text-sm">
+        <li><a href="#">Our Mission</a></li>
+        <li><a href="#">Our Vision</a></li>
+        <li><a href="#">Key Features</a></li>
+      </ul>
+    </div>
+
+    {/* Services */}
+    <div>
+      <h4 className="font-bold mb-3">Services</h4>
+      <ul className="space-y-2 text-sm">
+        <li><a href="#">Account Aggregation</a></li>
+        <li><a href="#">International Money Transfer</a></li>
+        <li><a href="#">AI Analytics</a></li>
+        <li><a href="#">Document Vault</a></li>
+        <li><a href="#">Security Layer</a></li>
+        <li><a href="#">FX</a></li>
+        <li><a href="#">Core Banking</a></li>
+      </ul>
+    </div>
+
+    {/* Resources */}
+    <div>
+      <h4 className="font-bold mb-3">Resources</h4>
+      <ul className="space-y-2 text-sm">
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+
+    {/* Contact */}
+    <div>
+      <h4 className="font-bold mb-3">Contact Us</h4>
+      <ul className="space-y-2 text-sm">
+        <li><a href="mailto:Info@fintractglobal.com">Info@fintractglobal.com</a></li>
+        <li><a href="tel:+41867738388">+41 8677383888</a></li>
+      </ul>
+    </div>
+  </div>
+
+  {/* Copyright */}
+  <div className="mt-10 border-t border-white/30 pt-4 text-sm text-center">
+    © {new Date().getFullYear()} Fintract Global. All rights reserved.
+  </div>
+        </footer>
     </main>
   );
 }
+
