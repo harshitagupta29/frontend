@@ -35,7 +35,7 @@ export default function Home() {
             
           </div>
           <div>
-            <Image src="/captureit.png" alt="Hero" width={500} height={400} className="w-full h-auto" />
+            <Image src="/Captureit.PNG" alt="Hero" width={500} height={400} className="w-full h-auto" />
           </div>
         </div>
       </section>
