@@ -9,7 +9,6 @@ export default function Home() {
 
       {/* Navbar */}
       <Navbar />
-
       {/* Hero Section */}
       <section className="py-12 px-4 md:px-20 bg-white border-b">
         <div className="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
@@ -41,6 +40,7 @@ export default function Home() {
       </section>
 
 
+     
       {/* Stats Bar */}
       <section className="bg-green-900 text-white py-8 px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 text-center text-sm">
