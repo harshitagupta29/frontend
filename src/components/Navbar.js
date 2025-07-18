@@ -1,5 +1,11 @@
 // src/components/Navbar.js
+
+
 "use client";
+
+
+
+import Image from "next/image";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,7 +27,15 @@ export default function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-xl font-bold">FintractGlobal</div>
+   <Link href="/" className="flex items-center space-x-2">
+  <Image
+    src="/logo.png"
+    alt="Fintract Global Logo"
+    width={40}
+    height={40}
+    className="w-auto h-10"
+  />
+</Link>
 
         {/* Desktop menu */}
         <div className="hidden md:flex space-x-6">
@@ -68,3 +82,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
