@@ -196,7 +196,7 @@ export default function Hero() {
     {/* Logo and description */}
     <div>
       <div className="flex items-center mb-2">
-        <img src="/Capturew.png" alt="Fintract Global Logo" className="h-8 mr-2" />
+        <img src="/Capturew.PNG" alt="Fintract Global Logo" className="h-8 mr-2" />
         <span className="font-bold text-lg">Fintract Global</span>
       </div>
       <p className="mb-2 text-sm">
