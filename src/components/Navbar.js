@@ -17,19 +17,23 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+      <nav className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-1 py-2 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <Image
-            src="/logo.png"
+            src="/Capturew.PNG"
             alt="Fintract Global Logo"
-            width={40}
-            height={40}
-            className="w-auto h-10"
+            width={120}
+            height={120}
+            className="w-auto h-12 border border-gray-200 p-0.5 "
+            
+
           />
         </Link>
 
+  
         {/* Center Nav Links */}
         <div className="hidden md:flex space-x-6 mx-auto">
           {navItems.map((item) => (
