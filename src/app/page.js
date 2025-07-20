@@ -167,9 +167,8 @@ export default function Hero() {
 
     
   {/* Text + Image Section */}
-      <section className="w-full px-4 py-8">
-  <div className="max-w-4xl mx-auto flex flex-row items-center justify-between gap-4 text-left">
-    {/* Left: Description */}
+     <section className="w-full px-4 py-8">
+  <div className="max-w-4xl mx-auto flex flex-row items-center gap-4">
     <div className="flex-1">
       <p className="text-gray-800 text-lg">
         CXOs of many big companies trust and believe in our ethics and professional journey,
@@ -179,18 +178,18 @@ export default function Hero() {
         individuals, and the government.
       </p>
     </div>
-    {/* Right: Photo */}
-    <div className="flex-shrink-0 flex justify-center">
+    <div>
       <Image
         src="/girl.png"
         alt="Professional Discussion"
-        width={300}
-        height={200}
+        width={200}
+        height={120}
         className="rounded-lg shadow-lg object-cover"
       />
     </div>
   </div>
 </section>
+
 
 
      {/* Footer */}
