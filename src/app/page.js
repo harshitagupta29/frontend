@@ -167,10 +167,11 @@ export default function Hero() {
 
     
   {/* Text + Image Section */}
-  <section className="w-full px-4 py-8">
-  <div className="max-w-5xl mx-auto flex flex-row items-center gap-4">
-    <div className="flex-1">
-      <p className="text-gray-800 text-xl">
+<section className="w-full px-4 py-8">
+  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 text-left">
+    {/* Text */}
+    <div className="w-full md:w-1/2">
+      <p className="text-gray-800 text-base sm:text-xl font-bold mb-0">
         CXOs of many big companies trust and believe in our ethics and professional journey,
         emulating their business goals and success. This list includes multinational corporations,
         financial institutions, private equity funds, domestic corporations, joint ventures,
@@ -178,19 +179,18 @@ export default function Hero() {
         individuals, and the government.
       </p>
     </div>
-    <div>
+    {/* Image */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end">
       <Image
         src="/girl.png"
         alt="Professional Discussion"
-        width={400}
-        height={220}
+        width={320}
+        height={180}
         className="rounded-lg shadow-lg object-cover"
       />
     </div>
   </div>
 </section>
-
-
 
 
      {/* Footer */}
