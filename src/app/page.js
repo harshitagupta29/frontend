@@ -167,7 +167,7 @@ export default function Hero() {
 
     
   {/* Text + Image Section */}
-     <section className="w-full px-4 py-8">
+  <section className="w-full px-4 py-8">
   <div className="max-w-5xl mx-auto flex flex-row items-center gap-4">
     <div className="flex-1">
       <p className="text-gray-800 text-xl">
