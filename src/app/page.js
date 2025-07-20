@@ -45,21 +45,20 @@ export default function Hero() {
           </div>
         </div>
         </section>
-
 <section className="w-full px-4 py-8">
-  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6">
-    {/* Left: Text */}
-    <p className="text-black text-xl font-bold mb-6 md:mb-0 min-w-[300px]">
+  <div className="max-w-6xl mx-auto flex flex-row items-center justify-between gap-4 text-left">
+    {/* Text */}
+    <p className="text-black text-base sm:text-xl font-bold min-w-[160px] mr-2 mb-0">
       Trusted by more than 100+ top Companies
     </p>
-    {/* Right: Logos */}
-    <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 bg-white p-4 rounded-2xl shadow border">
-      <Image src="/lloyds.png" alt="Lloyds Bank" width={100} height={40} />
-      <Image src="/blackrock.png" alt="BlackRock" width={100} height={40} />
-      <Image src="/paypal.png" alt="PayPal" width={100} height={40} />
-      <Image src="/hsbc.png" alt="HSBC" width={100} height={40} />
-      <Image src="/amazon.png" alt="Amazon" width={100} height={40} />
-      <Image src="/tsb.png" alt="TSB" width={100} height={40} />
+    {/* Logos */}
+    <div className="flex flex-wrap justify-center items-center gap-4 bg-white p-2 rounded-2xl shadow border max-w-full overflow-x-auto">
+      <Image src="/lloyds.png" alt="Lloyds Bank" width={70} height={28} />
+      <Image src="/blackrock.png" alt="BlackRock" width={70} height={28} />
+      <Image src="/paypal.png" alt="PayPal" width={70} height={28} />
+      <Image src="/hsbc.png" alt="HSBC" width={70} height={28} />
+      <Image src="/amazon.png" alt="Amazon" width={70} height={28} />
+      <Image src="/tsb.png" alt="TSB" width={70} height={28} />
     </div>
   </div>
 </section>
@@ -168,13 +167,11 @@ export default function Hero() {
 
     
   {/* Text + Image Section */}
-  <div className="max-w-6xl mx-auto mt-20 grid md:grid-cols-2 gap-8 items-center text-left px-4 md:px-0">
-    {/* Left Text */}
-    <div className="flex items-center justify-center h-full">
-
-        <p className="text-gray-800 text-xl leading-relaxed md:text-left text-center">
-      
-      
+      <section className="w-full px-4 py-8">
+  <div className="max-w-4xl mx-auto flex flex-row items-center justify-between gap-4 text-left">
+    {/* Left: Description */}
+    <div className="flex-1">
+      <p className="text-gray-800 text-lg">
         CXOs of many big companies trust and believe in our ethics and professional journey,
         emulating their business goals and success. This list includes multinational corporations,
         financial institutions, private equity funds, domestic corporations, joint ventures,
@@ -182,18 +179,18 @@ export default function Hero() {
         individuals, and the government.
       </p>
     </div>
-
-    {/* Right Image */}
-    <div className="flex justify-center md:justify-end px-4 md:px-0">
+    {/* Right: Photo */}
+    <div className="flex-shrink-0 flex justify-center">
       <Image
         src="/girl.png"
         alt="Professional Discussion"
-        width={400}
+        width={300}
         height={200}
         className="rounded-lg shadow-lg object-cover"
       />
     </div>
   </div>
+</section>
 
 
      {/* Footer */}
