@@ -44,20 +44,28 @@ export default function Hero() {
             />
           </div>
         </div>
+        </section>
 
-  <div className="flex flex-col sm:flex-row items-center justify-between gap-75 mt-10 max-auto w-full">
-    <p className="text-black text-lg font-bold whitespace-nowrap mb-4 sm:mb-0">
+<section className="w-full px-4 py-8">
+  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6">
+    {/* Left: Text */}
+    <p className="text-black text-xl font-bold mb-6 md:mb-0 min-w-[300px]">
       Trusted by more than 100+ top Companies
     </p>
-    <Image
-      src="/trusted-logos.png"
-      alt="Trusted by 100+ companies"
-      width={1000}
-      height={100}
-      className="rounded-2xl shadow border p-2 bg-white max-w-full h-auto"
-    />
+    {/* Right: Logos */}
+    <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 bg-white p-4 rounded-2xl shadow border">
+      <Image src="/lloyds.png" alt="Lloyds Bank" width={100} height={40} />
+      <Image src="/blackrock.png" alt="BlackRock" width={100} height={40} />
+      <Image src="/paypal.png" alt="PayPal" width={100} height={40} />
+      <Image src="/hsbc.png" alt="HSBC" width={100} height={40} />
+      <Image src="/amazon.png" alt="Amazon" width={100} height={40} />
+      <Image src="/tsb.png" alt="TSB" width={100} height={40} />
     </div>
-  </section>
+  </div>
+</section>
+
+
+
 
      
       {/* Stats Bar */}
