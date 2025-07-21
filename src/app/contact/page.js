@@ -1,6 +1,38 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 
 export default function ContactPage() {
+  const [status, setStatus] = useState(""); // '', 'loading', 'success', 'error'
+  const [form, setForm] = useState({
+    first: "",
+    last: "",
+    email: "",
+    phone: "",
+    country: "+91",
+    message: ""
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ first: "", last: "", email: "", phone: "", country: "+91", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <main className="bg-white min-h-screen py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -50,17 +82,37 @@ export default function ContactPage() {
             <div className="h-full bg-white rounded-lg shadow p-8 flex flex-col">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               <p className="text-sm text-gray-500 mb-4">You can reach us anytime</p>
-              <form className="flex flex-col gap-5 flex-grow">
+              
+              {/* Status messages */}
+              {status === "success" && (
+                <div className="text-green-700 text-sm mb-3">
+                  Thank you! We will get back to you soon.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="text-red-600 text-sm mb-3">
+                  Sorry, there was a problem. Please try again.
+                </div>
+              )}
+              {status === "loading" && (
+                <div className="text-gray-500 text-sm mb-3">Sending...</div>
+              )}
+
+              <form className="flex flex-col gap-5 flex-grow" onSubmit={handleSubmit}>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <input
                     type="text"
                     placeholder="First name*"
+                    value={form.first}
+                    onChange={e => setForm(f => ({ ...f, first: e.target.value }))}
                     className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
                     required
                   />
                   <input
                     type="text"
                     placeholder="Last name*"
+                    value={form.last}
+                    onChange={e => setForm(f => ({ ...f, last: e.target.value }))}
                     className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
                     required
                   />
@@ -68,11 +120,15 @@ export default function ContactPage() {
                 <input
                   type="email"
                   placeholder="Email*"
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                   className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
                   required
                 />
                 <div className="flex gap-3">
                   <select
+                    value={form.country}
+                    onChange={e => setForm(f => ({ ...f, country: e.target.value }))}
                     className="px-3 py-3 rounded border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 w-24"
                     aria-label="Country code"
                   >
@@ -83,20 +139,25 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     placeholder="Phone Number*"
+                    value={form.phone}
+                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                     className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
                     required
                   />
                 </div>
                 <textarea
                   placeholder="How can we help?"
+                  value={form.message}
+                  onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                   className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 h-32 resize-none text-gray-900"
                   required
                 />
                 <button
                   type="submit"
                   className="w-full bg-gray-900 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-800 active:bg-gray-700 transition"
+                  disabled={status === "loading"}
                 >
-                  Submit
+                  {status === "loading" ? "Sending..." : "Submit"}
                 </button>
                 <p className="text-xs text-gray-500 mt-2 text-center">
                   By contacting us, you agree to our <span className="underline cursor-pointer">Terms of service</span> and <span className="underline cursor-pointer">Privacy policy</span>.
@@ -106,7 +167,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-      
+
         {/* Map & Location section remains unchanged */}
         <div className="mt-16 flex flex-col lg:flex-row gap-8 items-start">
           {/* Map */}
@@ -139,7 +200,12 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
+
+        {/* Footer (untouched) */}
+        {/* ...your existing footer code, unchanged... */}
       </div>
+    
+
     
     {/* Footer */}
 
