@@ -52,12 +52,12 @@ export default function Hero() {
     </p>
     {/* Logos */}
     <div className="flex flex-wrap justify-center items-center gap-4 bg-white p-2 rounded-2xl shadow border max-w-full overflow-x-auto">
-      <Image src="/lloyds.png" alt="Lloyds Bank" width={70} height={28} />
-      <Image src="/blackrock.png" alt="BlackRock" width={70} height={28} />
-      <Image src="/paypal.png" alt="PayPal" width={70} height={28} />
-      <Image src="/hsbc.png" alt="HSBC" width={70} height={28} />
+      <Image src="/lloyds1.png" alt="Lloyds Bank" width={70} height={28} />
+      <Image src="/blackrock1.png" alt="BlackRock" width={70} height={28} />
+      <Image src="/paypal1.png" alt="PayPal" width={70} height={28} />
+      <Image src="/hsbc1.png" alt="HSBC" width={70} height={28} />
       <Image src="/amazon.png" alt="Amazon" width={70} height={28} />
-      <Image src="/tsb.png" alt="TSB" width={70} height={28} />
+      <Image src="/tsb1.png" alt="TSB" width={70} height={28} />
     </div>
   </div>
 </section>
