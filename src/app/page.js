@@ -1,5 +1,5 @@
 // src/components/Hero.js
-import Navbar from "@/components/Navbar";
+
 import Image from "next/image";
 
 
@@ -7,8 +7,7 @@ export default function Hero() {
   return (
     <main className="bg-white text-black font-sans">
 
-      {/* Navbar */}
-      <Navbar />
+
       {/* Hero Section */}
       <section className="py-12 px-4 md:px-20 bg-white border-b">
         <div className="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
