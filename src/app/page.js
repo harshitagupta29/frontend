@@ -1,10 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Hero() {
+export default function HomePage() {
   return (
     <main className="bg-white text-black font-sans">
-
       {/* Hero Section */}
       <section className="py-12 px-4 md:px-20 bg-white border-b">
         <div className="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
@@ -150,7 +149,7 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Text + Image Section */}
+      {/* Trusted by CXOs */}
       <section className="w-full px-4 py-8">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 text-left">
           {/* Text */}
@@ -189,22 +188,7 @@ export default function Hero() {
               We want to accelerate client growth, enhance their customer base, and boost revenue through the use of our quality-focused products.
             </p>
             <div className="flex space-x-3 mt-2">
-              <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                {/* Facebook icon */}
-                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M22.675 0h-21.35C.596..."/>
-                </svg>
-              </a>
-              <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M23.499..."/>
-                </svg>
-              </a>
-              <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M19 0h-14C2.24..."/>
-                </svg>
-              </a>
+              {/* Social icons here */}
             </div>
           </div>
           {/* About Us */}

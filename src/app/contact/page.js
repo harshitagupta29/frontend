@@ -3,40 +3,65 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState(""); // '', 'loading', 'success', 'error'
+  // State for form and verification code
   const [form, setForm] = useState({
     first: "",
     last: "",
     email: "",
     phone: "",
     country: "+91",
-    message: ""
+    message: "",
   });
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState(1); // 1: fill form, 2: verify code
+  const [status, setStatus] = useState(""); // "", "loading", "success", "error", "code_error"
 
-  async function handleSubmit(e) {
+  // Send code to email
+  async function handleVerify(e) {
     e.preventDefault();
     setStatus("loading");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
-      });
-      if (res.ok) {
-        setStatus("success");
-        setForm({ first: "", last: "", email: "", phone: "", country: "+91", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
+    const res = await fetch("/api/contact/send-verification", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: form.email }),
+    });
+    if (res.ok) {
+      setStep(2);
+      setStatus("");
+    } else {
       setStatus("error");
+    }
+  }
+
+  // Validate code and send message
+  async function handleSend(e) {
+    e.preventDefault();
+    setStatus("loading");
+    const res = await fetch("/api/contact/verify-send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, code }),
+    });
+    if (res.ok) {
+      setStatus("success");
+      setForm({
+        first: "",
+        last: "",
+        email: "",
+        phone: "",
+        country: "+91",
+        message: "",
+      });
+      setCode("");
+      setStep(1);
+    } else {
+      setStatus("code_error");
     }
   }
 
   return (
     <main className="bg-white min-h-screen py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Row: Contact Info | Get in Touch Form */}
         <div className="flex flex-col lg:flex-row gap-10 border-t border-gray-200 pt-8 items-stretch">
           {/* Left: Contact Info */}
           <div className="flex-1 flex flex-col justify-center">
@@ -76,99 +101,135 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-
-          {/* Right: Form */}
+          {/* Right: Contact Form with Verification */}
           <div className="flex-1 flex flex-col justify-center">
             <div className="h-full bg-white rounded-lg shadow p-8 flex flex-col">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               <p className="text-sm text-gray-500 mb-4">You can reach us anytime</p>
-              
-              {/* Status messages */}
               {status === "success" && (
                 <div className="text-green-700 text-sm mb-3">
-                  Thank you! We will get back to you soon.
+                  Thank you! Your message was sent after verifying your email.
                 </div>
               )}
               {status === "error" && (
                 <div className="text-red-600 text-sm mb-3">
-                  Sorry, there was a problem. Please try again.
+                  Sorry, problem sending verification code. Please try again.
+                </div>
+              )}
+              {status === "code_error" && (
+                <div className="text-red-600 text-sm mb-3">
+                  The verification code is incorrect. Try again.
                 </div>
               )}
               {status === "loading" && (
-                <div className="text-gray-500 text-sm mb-3">Sending...</div>
+                <div className="text-gray-500 text-sm mb-3">
+                  Processing...
+                </div>
               )}
 
-              <form className="flex flex-col gap-5 flex-grow" onSubmit={handleSubmit}>
-                <div className="flex flex-col sm:flex-row gap-4">
+              {/* Step 1: Fill form, send code */}
+              {step === 1 && (
+                <form className="flex flex-col gap-5 flex-grow" onSubmit={handleVerify}>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <input
+                      type="text"
+                      placeholder="First name*"
+                      value={form.first}
+                      onChange={e => setForm(f => ({ ...f, first: e.target.value }))}
+                      className="w-full p-3 rounded border border-gray-300"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Last name*"
+                      value={form.last}
+                      onChange={e => setForm(f => ({ ...f, last: e.target.value }))}
+                      className="w-full p-3 rounded border border-gray-300"
+                      required
+                    />
+                  </div>
                   <input
-                    type="text"
-                    placeholder="First name*"
-                    value={form.first}
-                    onChange={e => setForm(f => ({ ...f, first: e.target.value }))}
-                    className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
+                    type="email"
+                    placeholder="Email*"
+                    value={form.email}
+                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                    className="w-full p-3 rounded border border-gray-300"
                     required
                   />
-                  <input
-                    type="text"
-                    placeholder="Last name*"
-                    value={form.last}
-                    onChange={e => setForm(f => ({ ...f, last: e.target.value }))}
-                    className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
+                  <div className="flex gap-3">
+                    <select
+                      value={form.country}
+                      onChange={e => setForm(f => ({ ...f, country: e.target.value }))}
+                      className="px-3 py-3 rounded border border-gray-300 bg-white text-gray-700 w-24"
+                      aria-label="Country code"
+                    >
+                      <option value="+64">+64</option>
+                      <option value="+91">+91</option>
+                      <option value="+44">+44</option>
+                    </select>
+                    <input
+                      type="tel"
+                      placeholder="Phone Number*"
+                      value={form.phone}
+                      onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                      className="w-full p-3 rounded border border-gray-300"
+                      required
+                    />
+                  </div>
+                  <textarea
+                    placeholder="How can we help?"
+                    value={form.message}
+                    onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                    className="w-full p-3 rounded border border-gray-300 h-32 resize-none"
                     required
                   />
-                </div>
-                <input
-                  type="email"
-                  placeholder="Email*"
-                  value={form.email}
-                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                  className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
-                  required
-                />
-                <div className="flex gap-3">
-                  <select
-                    value={form.country}
-                    onChange={e => setForm(f => ({ ...f, country: e.target.value }))}
-                    className="px-3 py-3 rounded border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 w-24"
-                    aria-label="Country code"
+                  <button
+                    type="submit"
+                    className="w-full bg-green-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-800 transition"
+                    disabled={status === "loading"}
                   >
-                    <option value="+64">+64</option>
-                    <option value="+91">+91</option>
-                    <option value="+44">+44</option>
-                  </select>
+                    {status === "loading" ? "Sending Code..." : "Verify Email"}
+                  </button>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    By contacting us, you agree to our <span className="underline cursor-pointer">Terms of service</span> and <span className="underline cursor-pointer">Privacy policy</span>.
+                  </p>
+                </form>
+              )}
+
+              {/* Step 2: Enter code, send message */}
+              {step === 2 && (
+                <form className="flex flex-col gap-5 flex-grow" onSubmit={handleSend}>
+                  <div className="mb-1 text-sm text-gray-800">
+                    A verification code was sent to <span className="font-bold">{form.email}</span>. Please enter it below.
+                  </div>
                   <input
-                    type="tel"
-                    placeholder="Phone Number*"
-                    value={form.phone}
-                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-900"
+                    type="text"
+                    placeholder="Enter verification code"
+                    value={code}
+                    onChange={e => setCode(e.target.value)}
+                    className="w-full p-3 rounded border border-gray-300"
                     required
                   />
-                </div>
-                <textarea
-                  placeholder="How can we help?"
-                  value={form.message}
-                  onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600 h-32 resize-none text-gray-900"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-gray-900 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-800 active:bg-gray-700 transition"
-                  disabled={status === "loading"}
-                >
-                  {status === "loading" ? "Sending..." : "Submit"}
-                </button>
-                <p className="text-xs text-gray-500 mt-2 text-center">
-                  By contacting us, you agree to our <span className="underline cursor-pointer">Terms of service</span> and <span className="underline cursor-pointer">Privacy policy</span>.
-                </p>
-              </form>
+                  <button
+                    type="submit"
+                    className="w-full bg-green-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-800 transition"
+                    disabled={status === "loading"}
+                  >
+                    {status === "loading" ? "Sending..." : "Send Message"}
+                  </button>
+                  <button
+                    type="button"
+                    className="text-gray-500 underline mt-2"
+                    onClick={() => { setStep(1); setCode(""); }}
+                  >
+                    Change details
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
-
-
-        {/* Map & Location section remains unchanged */}
+        {/* MAP & LOCATION Section */}
         <div className="mt-16 flex flex-col lg:flex-row gap-8 items-start">
           {/* Map */}
           <div className="w-full lg:w-1/2 h-[300px] rounded-xl overflow-hidden shadow border border-gray-200">
@@ -200,108 +261,78 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
-
-        {/* Footer (untouched) */}
-        {/* ...your existing footer code, unchanged... */}
       </div>
-    
 
-    
-    {/* Footer */}
-
-    
-<footer className="bg-green-900 text-white py-10 px-6">
-  <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-    {/* Logo and description */}
-    <div>
-      <div className="flex items-center mb-2">
-        <img src="/Capturew.PNG" alt="Fintract Global Logo" className="h-8 mr-2" />
-        <span className="font-bold text-lg">Fintract Global</span>
-      </div>
-      <p className="mb-2 text-sm">
-        We want to accelerate client growth, enhance their customer base, and boost revenue through the use of our quality-focused products.
-      </p>
-      <div className="flex space-x-3 mt-2">
-        <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-          {/* Facebook icon, use SVG or icon library */}
-          <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M22.675 0h-21.35C.596..."/>
-          </svg>
-        </a>
-        <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-          {/* YouTube icon */}
-          <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M23.499..."/>
-          </svg>
-        </a>
-        <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-          {/* LinkedIn icon */}
-          <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M19 0h-14C2.24..."/>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    {/* About Us */}
-    <div>
-      <h4 className="font-semibold mb-3">About Us</h4>
-      <ul className="space-y-2 text-sm">
-        <li><a href="#" className="hover:underline">Our Mission</a></li>
-        <li><a href="#" className="hover:underline">Our Vision</a></li>
-        <li><a href="#" className="hover:underline">Key Features</a></li>
-      </ul>
-    </div>
-
-    {/* Services */}
-    <div>
-      <h4 className="font-semibold mb-3">Services</h4>
-      <ul className="space-y-2 text-sm">
-        <li><a href="#" className="hover:underline">Account Aggregation</a></li>
-        <li><a href="#" className="hover:underline">International Money Transfer</a></li>
-        <li><a href="#" className="hover:underline">AI Analytics</a></li>
-        <li><a href="#" className="hover:underline">Document Vault</a></li>
-        <li><a href="#" className="hover:underline">Security Layer</a></li>
-        <li><a href="#" className="hover:underline">FX</a></li>
-        <li><a href="#" className="hover:underline">Core Banking</a></li>
-      </ul>
-    </div>
-
-    {/* Resources */}
-    <div>
-      <h4 className="font-semibold mb-3">Resources</h4>
-      <ul className="space-y-2 text-sm">
-        <li><a href="#" className="hover:underline">Blogs</a></li>
-        <li><a href="#" className="hover:underline">Careers</a></li>
-        <li><a href="#" className="hover:underline">Help Centre</a></li>
-        <li><a href="#" className="hover:underline">Support</a></li>
-      </ul>
-    </div>
-
-    {/* Contact Us */}
-    <div>
-      <h4 className="font-semibold mb-3">Contact Us</h4>
-      <ul className="space-y-2 text-sm">
-        <li>
-          <a href="mailto:info@fintractglobal.com" className="hover:underline">
-            info@fintractglobal.com
-          </a>
-        </li>
-        <li>
-          <a href="tel:+418677383888" className="hover:underline">
-            +41 8677383888
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  {/* Bottom bar */}
-  <div className="mt-10 border-t border-white/30 pt-4 text-sm text-center">
-    © {new Date().getFullYear()} Fintract Global. All rights reserved.
-  </div>
-</footer>
-
-</main>
+      {/* Footer */}
+      <footer className="bg-green-900 text-white py-10 px-6 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+          {/* Logo and description */}
+          <div>
+            <div className="flex items-center mb-2">
+              <img src="/Capturew.PNG" alt="Fintract Global Logo" className="h-8 mr-2" />
+              <span className="font-bold text-lg">Fintract Global</span>
+            </div>
+            <p className="mb-2 text-sm">
+              We want to accelerate client growth, enhance their customer base, and boost revenue through the use of our quality-focused products.
+            </p>
+            <div className="flex space-x-3 mt-2">
+              {/* Social icons can go here */}
+            </div>
+          </div>
+          {/* About Us */}
+          <div>
+            <h4 className="font-semibold mb-3">About Us</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:underline">Our Mission</a></li>
+              <li><a href="#" className="hover:underline">Our Vision</a></li>
+              <li><a href="#" className="hover:underline">Key Features</a></li>
+            </ul>
+          </div>
+          {/* Services */}
+          <div>
+            <h4 className="font-semibold mb-3">Services</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:underline">Account Aggregation</a></li>
+              <li><a href="#" className="hover:underline">International Money Transfer</a></li>
+              <li><a href="#" className="hover:underline">AI Analytics</a></li>
+              <li><a href="#" className="hover:underline">Document Vault</a></li>
+              <li><a href="#" className="hover:underline">Security Layer</a></li>
+              <li><a href="#" className="hover:underline">FX</a></li>
+              <li><a href="#" className="hover:underline">Core Banking</a></li>
+            </ul>
+          </div>
+          {/* Resources */}
+          <div>
+            <h4 className="font-semibold mb-3">Resources</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#" className="hover:underline">Blogs</a></li>
+              <li><a href="#" className="hover:underline">Careers</a></li>
+              <li><a href="#" className="hover:underline">Help Centre</a></li>
+              <li><a href="#" className="hover:underline">Support</a></li>
+            </ul>
+          </div>
+          {/* Contact Us */}
+          <div>
+            <h4 className="font-semibold mb-3">Contact Us</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="mailto:info@fintractglobal.com" className="hover:underline">
+                  info@fintractglobal.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+418677383888" className="hover:underline">
+                  +41 8677383888
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* Bottom bar */}
+        <div className="mt-10 border-t border-white/30 pt-4 text-sm text-center">
+          © {new Date().getFullYear()} Fintract Global. All rights reserved.
+        </div>
+      </footer>
+    </main>
   );
 }

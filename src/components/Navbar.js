@@ -17,8 +17,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-
-      <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-1 py-2 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
@@ -27,13 +26,10 @@ export default function Navbar() {
             alt="Fintract Global Logo"
             width={120}
             height={120}
-            className="w-auto h-12 border border-gray-200 p-0.5 "
-            
-
+            className="w-auto h-12 border border-gray-200 p-0.5"
           />
         </Link>
 
-  
         {/* Center Nav Links */}
         <div className="hidden md:flex space-x-6 mx-auto">
           {navItems.map((item) => (
@@ -53,12 +49,18 @@ export default function Navbar() {
 
         {/* Right Auth Buttons */}
         <div className="hidden md:flex space-x-4">
-          <button className="border border-green-700 text-green-700 px-4 py-2 rounded-full hover:bg-green-700 hover:text-white transition text-sm">
+          <Link
+            href="/login"
+            className="border border-green-700 text-green-700 px-6 py-2 rounded-full hover:bg-green-700 hover:text-white transition text-base font-medium"
+          >
             Login
-          </button>
-          <button className="bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-800 transition text-sm">
+          </Link>
+          <Link
+            href="/signup"
+            className="bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-800 transition text-base font-medium"
+          >
             Sign Up
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -89,12 +91,20 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="mt-4 space-y-2">
-            <button className="w-full border border-green-700 text-green-700 px-4 py-2 rounded-full hover:bg-green-700 hover:text-white transition text-sm">
+            <Link
+              href="/login"
+              className="w-full block text-center border border-green-700 text-green-700 px-4 py-2 rounded-full hover:bg-green-700 hover:text-white transition text-sm"
+              onClick={() => setIsOpen(false)}
+            >
               Login
-            </button>
-            <button className="w-full bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-800 transition text-sm">
+            </Link>
+            <Link
+              href="/signup"
+              className="w-full block text-center bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-800 transition text-sm"
+              onClick={() => setIsOpen(false)}
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
         </div>
       )}
