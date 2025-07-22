@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function POST(req) {
   const { email } = await req.json();
@@ -14,13 +16,13 @@ export async function POST(req) {
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "harshitagupta2906@gmail.com", // your Gmail
-        pass: "cpinouqzqivrbwcy",           // your Gmail App Password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     let mailOptions = {
-      from: "harshitagupta2906@gmail.com",
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "Your OTP Code",
       text: `Your OTP is ${otp}`,
