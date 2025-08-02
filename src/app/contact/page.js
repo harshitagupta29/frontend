@@ -35,29 +35,68 @@ export default function ContactPage() {
 
   // Validate code and send message
   async function handleSend(e) {
-    e.preventDefault();
-    setStatus("loading");
-    const res = await fetch("/api/contact/verify-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, code }),
-    });
-    if (res.ok) {
-      setStatus("success");
-      setForm({
-        first: "",
-        last: "",
-        email: "",
-        phone: "",
-        country: "+91",
-        message: "",
-      });
-      setCode("");
-      setStep(1);
-    } else {
-      setStatus("code_error");
-    }
-  }
+ e.preventDefault();
+ setStatus("loading");
+
+ // First verify the OTP
+ const verifyRes = await fetch("/api/contact/verify-code", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify({ ...form, code }),
+ });
+
+ if (verifyRes.ok) {
+ // If OTP is verified, send email to owner
+ const sendEmailRes = await fetch("/api/contact/send-feedback", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify(form),
+ });
+
+ if (sendEmailRes.ok) {
+ setStatus("success");
+ setForm({
+ first: "",
+ last: "",
+ email: "",
+ phone: "",
+ country: "+91",
+ message: "",
+ });
+ setCode("");
+ setStep(1);
+ } else {
+ setStatus("error");
+ }
+ } else {
+ setStatus("code_error");
+ }
+}
+  // async function handleSend(e) {
+  //   e.preventDefault();
+  //   setStatus("loading");
+  //   const res = await fetch("/api/contact/verify-code", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ ...form, code }),
+  //   });
+  //   if (res.ok) {
+
+  //     setStatus("success");
+  //     setForm({
+  //       first: "",
+  //       last: "",
+  //       email: "",
+  //       phone: "",
+  //       country: "+91",
+  //       message: "",
+  //     });
+  //     setCode("");
+  //     setStep(1);
+  //   } else {
+  //     setStatus("code_error");
+  //   }
+  // }
 
   return (
     <main className="bg-white min-h-screen py-12 px-4">
