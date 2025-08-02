@@ -1,13 +1,13 @@
 export async function POST(req) {
-  const { otp } = await req.json();
+  const body = await req.json();
+  console.log("Request body:", body);
+  const { code } = body;
 
-  if (parseInt(otp) === global.generatedOTP) {
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-    });
+  console.log("Received code:", code, "Expected OTP:", global.generatedOTP);
+
+  if ((code + '').trim() === (global.generatedOTP + '').trim()) {
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   } else {
-    return new Response(JSON.stringify({ success: false }), {
-      status: 401,
-    });
+    return new Response(JSON.stringify({ success: false }), { status: 401 });
   }
 }
