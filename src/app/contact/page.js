@@ -37,7 +37,7 @@ export default function ContactPage() {
   async function handleSend(e) {
     e.preventDefault();
     setStatus("loading");
-    const res = await fetch("/api/contact/verify-send", {
+    const res = await fetch("/api/contact/verify-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form, code }),
@@ -195,7 +195,6 @@ export default function ContactPage() {
                   </p>
                 </form>
               )}
-
               {/* Step 2: Enter code, send message */}
               {step === 2 && (
                 <form className="flex flex-col gap-5 flex-grow" onSubmit={handleSend}>
@@ -208,6 +207,7 @@ export default function ContactPage() {
                     value={code}
                     onChange={e => setCode(e.target.value)}
                     className="w-full p-3 rounded border border-gray-300"
+                    
                     required
                   />
                   <button
