@@ -16,62 +16,114 @@ export default function ContactPage() {
   const [step, setStep] = useState(1); // 1: fill form, 2: verify code
   const [status, setStatus] = useState(""); // "", "loading", "success", "error", "code_error"
 
-  // Send code to email
-  async function handleVerify(e) {
-    e.preventDefault();
-    setStatus("loading");
-    const res = await fetch("/api/contact/send-verification", {
+  // // Send code to email
+  // async function handleVerify(e) {
+  //   e.preventDefault();
+  //   setStatus("loading");
+  //   const res = await fetch("/api/contact/send-verification", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ email: form.email }),
+  //   });
+  //   if (res.ok) {
+  //     setStep(2);
+  //     setStatus("");
+  //   } else {
+  //     setStatus("error");
+  //   }
+  // }
+
+  // Validate code and send message
+  const [sentOtp, setSentOtp] = useState("");
+
+async function handleVerify(e) {
+  e.preventDefault();
+  setStatus("loading");
+
+  const res = await fetch("/api/contact/send-verification", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: form.email }),
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    setSentOtp(data.otp); // 🔐 Store OTP received from server
+    setStep(2);
+    setStatus("");
+  } else {
+    setStatus("error");
+  }
+}
+async function handleSend(e) {
+  e.preventDefault();
+  setStatus("loading");
+
+  const verifyRes = await fetch("/api/contact/verify-code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code, originalOtp: sentOtp }), // 🔐 send stored OTP
+  });
+
+  if (verifyRes.ok) {
+    const sendEmailRes = await fetch("/api/contact/send-feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: form.email }),
+      body: JSON.stringify(form),
     });
-    if (res.ok) {
-      setStep(2);
-      setStatus("");
+
+    if (sendEmailRes.ok) {
+      setStatus("success");
+      setForm({ first: "", last: "", email: "", phone: "", country: "+91", message: "" });
+      setCode("");
+      setStep(1);
     } else {
       setStatus("error");
     }
+  } else {
+    setStatus("code_error");
   }
-
-  // Validate code and send message
-  async function handleSend(e) {
- e.preventDefault();
- setStatus("loading");
-
- // First verify the OTP
- const verifyRes = await fetch("/api/contact/verify-code", {
- method: "POST",
- headers: { "Content-Type": "application/json" },
- body: JSON.stringify({ ...form, code }),
- });
-
- if (verifyRes.ok) {
- // If OTP is verified, send email to owner
- const sendEmailRes = await fetch("/api/contact/send-feedback", {
- method: "POST",
- headers: { "Content-Type": "application/json" },
- body: JSON.stringify(form),
- });
-
- if (sendEmailRes.ok) {
- setStatus("success");
- setForm({
- first: "",
- last: "",
- email: "",
- phone: "",
- country: "+91",
- message: "",
- });
- setCode("");
- setStep(1);
- } else {
- setStatus("error");
- }
- } else {
- setStatus("code_error");
- }
 }
+
+  // async function handleSend(e) {
+  //   e.preventDefault();
+  //   setStatus("loading");
+
+  //   // First verify the OTP
+  //   const verifyRes = await fetch("/api/contact/verify-code", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ ...form, code }),
+  //   });
+
+  //   if (verifyRes.ok) {
+  //     // If OTP is verified, send email to owner
+  //     const sendEmailRes = await fetch("/api/contact/send-feedback", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(form),
+  //     });
+
+  //     if (sendEmailRes.ok) {
+  //       setStatus("success");
+  //       setForm({
+  //         first: "",
+  //         last: "",
+  //         email: "",
+  //         phone: "",
+  //         country: "+91",
+  //         message: "",
+  //       });
+  //       setCode("");
+  //       setStep(1);
+  //     } else {
+  //       setStatus("error");
+  //     }
+  //   } else {
+  //     setStatus("code_error");
+  //   }
+  // }
   // async function handleSend(e) {
   //   e.preventDefault();
   //   setStatus("loading");
@@ -246,7 +298,7 @@ export default function ContactPage() {
                     value={code}
                     onChange={e => setCode(e.target.value)}
                     className="w-full p-3 rounded border border-gray-300"
-                    
+
                     required
                   />
                   <button
